@@ -91,12 +91,16 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
             g.drawString(str, 460, 30);
         }
         else{
-            String str;
-            if(brickBuilder.getBrokenBricksCount() == brickBuilder.getTotalBricksCount())
+            String str = "";
+            if(brickBuilder.getBrokenBricksCount() == brickBuilder.getTotalBricksCount()) {
                 str = "Congrats, You won the game. ";
-            else
+                str +=  "Your Score : " + (brickBuilder.getBrokenBricksCount()*10) + ". Press Enter to restart game" ;
+            }
+            else if(ball_y_axis >= board_y_axis) {
                 str = "Game Over. ";
-            str +=  "Your Score : " + (brickBuilder.getBrokenBricksCount()*10) + ". Press Enter to restart game" ;
+                str +=  "Your Score : " + (brickBuilder.getBrokenBricksCount()*10) + ". Press Enter to restart game" ;
+            }
+            
             g.drawString(str, 100, 300);
         }
         
