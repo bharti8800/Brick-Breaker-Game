@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.LayoutManager;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -14,8 +15,11 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
     //some variables i need for setting coordinates
     
     //ball coordinates
-    int ball_x_axis = 0;
-    int ball_y_axis = 0;
+    int ball_x_axis = 30;
+    int ball_y_axis = 30;
+    int ball_x_dir = -1;
+    int ball_y_dir = -2;
+    
     
     //play flag false if not playing
     boolean play_flag = false;
@@ -37,8 +41,32 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                
-                
+                if(play_flag) {
+                    ball_x_axis += ball_x_dir;
+                    ball_y_axis += ball_y_dir;
+                    
+                    if(ball_x_axis <= 0) {
+                        ball_x_dir = -ball_x_dir;
+                    }
+                    if(ball_y_axis <= 0) {
+                        ball_y_dir = -ball_y_dir;
+                    }
+                    if(ball_x_axis >= 600-30) {
+                        ball_x_dir = -ball_x_dir;
+                    }
+                    //now we need colliding function with the board
+                    Rectangle board_rect = new Rectangle(board_x, board_y_axis, board_width, board_height);
+                    Rectangle ball_rect = new Rectangle(ball_x_axis, ball_y_axis, 20, 20);
+                    if (ball_rect.intersects(board_rect)) {
+                        ball_y_dir = -ball_y_dir;
+                    }
+                    
+                    if(ball_y_axis > 600) {
+                        //game over
+                    }
+                    repaint();
+                    
+                }
             }
             
         };
