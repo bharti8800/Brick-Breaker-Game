@@ -19,7 +19,8 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
     int ball_y_axis = 30;
     int ball_x_dir = -1;
     int ball_y_dir = -2;
-    
+    int ball_height = 20;
+    int ball_width = 20;
     
     //play flag false if not playing
     boolean play_flag = false;
@@ -59,7 +60,7 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
                     }
                     //now we need colliding function with the board
                     Rectangle board_rect = new Rectangle(board_x, board_y_axis, board_width, board_height);
-                    Rectangle ball_rect = new Rectangle(ball_x_axis, ball_y_axis, 20, 20);
+                    Rectangle ball_rect = new Rectangle(ball_x_axis, ball_y_axis, ball_width, ball_height);
                     if (ball_rect.intersects(board_rect)) {
                         ball_y_dir = -ball_y_dir;
                     }
@@ -73,7 +74,7 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
             }
             
         };
-        timer = new Timer(5, listener );
+        timer = new Timer(2, listener );
         graphicsCreator = new GraphicsCreator();
         
         //graphicsCreator.paintGraphics(graphics);
@@ -94,13 +95,18 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
         
         //paint the ball
         g.setColor(Color.yellow);
-        g.drawOval(ball_x_axis, ball_y_axis, 20, 20);
-        g.fillOval(ball_x_axis, ball_y_axis, 20, 20);
+        g.drawOval(ball_x_axis, ball_y_axis, ball_width, ball_height);
+        g.fillOval(ball_x_axis, ball_y_axis, ball_width, ball_height);
         
-        brickBuilder.paint(g);
+        brickBuilder.paint(g,new int[]{ball_x_axis, ball_y_axis, ball_width, ball_height}, this);
         
         
        
+    }
+    
+    public void resetBallDirections() {
+        ball_x_dir = -ball_x_dir;
+        ball_y_dir = -ball_y_dir;
     }
 
     public GamePlay(LayoutManager layout) {
