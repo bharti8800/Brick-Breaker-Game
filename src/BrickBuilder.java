@@ -1,28 +1,30 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.util.Arrays;
-import java.util.List;
 
 public class BrickBuilder {
 
-    final int total_bricks = 24;
-    int bricks_broken = 0;
-    final int total_brick_rows = 7;
-    final int total_brick_cols = 4;
-    int brick_x = 60;
-    int brick_y = 40;
-    final int brick_width = 40;
-    final int brick_height = 30;
-    int rect_value[][];
-     //rectangles;
-    
+    private int bricks_broken = 0;
+    private final int total_brick_rows = 7;
+    private final int total_brick_cols = 4;
+    private final int total_bricks = total_brick_rows * total_brick_cols;
+    private int brick_x = 60;
+    private int brick_y = 40;
+    private final int brick_width = 40;
+    private final int brick_height = 30;
+    private int rect_value[][];
+     
     public BrickBuilder() {
         bricks_broken = 0;//set bricks broken to 0
         rect_value = new int[total_brick_rows][total_brick_cols];
     }
     
-    public void paint(Graphics g, int[] ball,GamePlay gameplay) {
+    public void resetGame() {
+        bricks_broken = 0;//set bricks broken to 0
+        rect_value = new int[total_brick_rows][total_brick_cols];
+    }
+    
+    public void repaint(Graphics g, int[] ball, GamePlay gameplay) {
         g.setColor(Color.green);
         for(int row = 0; row<total_brick_rows; row++) {
             for(int col = 0; col<total_brick_cols; col++) {
@@ -36,6 +38,7 @@ public class BrickBuilder {
                         g.clearRect(brick_x + (row*60 + brick_width), brick_y + (col*40 + brick_height), brick_width, brick_height);
                         gameplay.resetBallDirections();
                         rect_value[row][col] = 1;
+                        bricks_broken++;
                     }
                     else {
                         g.drawRect(brick_x + (row*60 + brick_width) , brick_y + (col*40 + brick_height), brick_width, brick_height);
@@ -47,5 +50,13 @@ public class BrickBuilder {
             }   
         }
         
+    }
+    
+    public int getBrokenBricksCount() {
+        return this.bricks_broken;
+    }
+
+    public int getTotalBricksCount() {
+        return this.total_bricks;
     }
 }
