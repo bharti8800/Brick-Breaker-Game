@@ -33,11 +33,14 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
     Timer timer;
     
     GraphicsCreator graphicsCreator;
+    BrickBuilder brickBuilder;
+    ActionListener listener;
     
     public GamePlay() {
         setFocusable(true);
         addKeyListener(this);
-        ActionListener listener = new ActionListener() {
+        brickBuilder = new BrickBuilder();
+        listener = new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -93,6 +96,8 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
         g.setColor(Color.yellow);
         g.drawOval(ball_x_axis, ball_y_axis, 20, 20);
         g.fillOval(ball_x_axis, ball_y_axis, 20, 20);
+        
+        brickBuilder.paint(g);
         
         
        
